@@ -543,7 +543,7 @@ var margin = {top: 1, right: 1, bottom: 6, left: 1},
     height = 600 - margin.top - margin.bottom;
 
 var formatNumber = d3.format(",.0f"),
-    format = function(d) { return formatNumber(d) + " kUSDT"; },
+    format = function(d) { return formatNumber(d / 1000) + " kUSDT"; },
     color = d3.scale.category20();
 
 var sankey = d3.sankey()
@@ -658,7 +658,7 @@ d3.csv("data/nodes.csv", function(nodes, error) {
             return {
                 source: d.source,
                 target: d.target,
-                value: +d.value / 1000
+                value: +d.value
             }
         });
         console.log(nodes, links);
