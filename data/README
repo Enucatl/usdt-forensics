@@ -1,0 +1,12 @@
+<h1 id="get-data">get data</h1>
+
+<p><code>
+wget https://www.bfxdata.com/csv/vwapHourlyBTCUSD.csv
+sed 's/"Vwap (BTCUSD)"/Vwap.BTCUSD/' vwapHourlyBTCUSD.csv &gt; btc.csv
+python tokencreation.py usdt.csv
+</code></p>
+
+<h1 id="plot">plot</h1>
+<p><code>
+./plot.R usdt.csv btc.csv
+</code></p>
