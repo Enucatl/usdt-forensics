@@ -544,7 +544,7 @@ var margin = {top: 1, right: 1, bottom: 6, left: 1},
 
 var formatNumber = d3.format(",.0f"),
     format = function(d) { return formatNumber(d / 1000) + " kUSDT"; },
-    color = d3.scale.category20();
+    color = d3.scale.category20c();
 
 var sankey = d3.sankey()
     .nodeWidth(15)
@@ -562,6 +562,24 @@ var rootGraphic = svg
 
 
 var path = sankey.link();
+
+var known_names = {
+    "1DUb2YYbQA1jjaNYzVXLZ7ZioEhLXtbUru": "Bittrex",
+    "1Co1dhYDeF76DQyEyj4B5JdXF9J7TtfWWE": "Poloniex",
+    "1Po1oWkD2LmodfkBYiAktwh76vkF93LKnh": "Poloniex",
+    "3NmqEssZvQomHbJFi72Hg3sEwBh6pSM6Zk": "Kraken",
+    "1KYiKJEfdJtap9QX2v9BXJMpz2SfU4pgZw": "Bitfinex",
+    "3BbDtxBSjgfTRxaBUgR2JACWRukLKtZdiQ": "Treasury",
+}
+
+function printableName(name) {
+    if(known_names[name]) {
+        return known_names[name]
+    }
+    else{
+        return name.substr(0, 4)
+    }
+}
 
 function createChart(energy) {
     sankey
@@ -586,7 +604,6 @@ function createChart(energy) {
     link.append("title")
         .text(function(d) { return d.source.name + " -> " + d.target.name + "\n" + format(d.value); });
 
-    console.log(energy.nodes)
     var node = allgraphics.append("g").attr("id", "node-container")
         .selectAll(".node")
         .data(energy.nodes)
@@ -614,7 +631,7 @@ function createChart(energy) {
         .attr("dy", ".35em")
         .attr("text-anchor", "end")
         .attr("transform", null)
-        .text(function(d) { return d.name.substr(0, 4); })
+        .text(function(d) { return printableName(d.name); })
         .filter(function(d) { return d.x < width / 2; })
         .attr("x", 6 + sankey.nodeWidth())
         .attr("text-anchor", "start");
@@ -661,7 +678,6 @@ d3.csv("data/nodes.csv", function(nodes, error) {
                 value: +d.value
             }
         });
-        console.log(nodes, links);
         var graph = {
             links: links,
             nodes: nodes,
