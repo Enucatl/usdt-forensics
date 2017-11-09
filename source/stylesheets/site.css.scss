@@ -1,8 +1,36 @@
 body {
-  padding-top: 50px;
-  }
+    padding-top: 50px;
+}
 
 .starter-template {
-  padding: 40px 15px;
-  text-align: center;
-  }
+    padding: 40px 15px;
+    text-align: center;
+}
+
+.node rect {
+    cursor: move;
+    fill-opacity: .9;
+    shape-rendering: crispEdges;
+}
+.node text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 #fff;
+}
+.link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .2;
+}
+.cycleLink {
+    fill: #600;
+    opacity: .2;
+    stroke: none;
+    stroke-linejoin: "round";
+}
+.cycleLink:hover {
+    opacity: .5;
+}
+.link:hover {
+    stroke-opacity: .5;
+}
+

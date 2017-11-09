@@ -45,6 +45,7 @@ page '/*.txt', layout: false
 #   activate :minify_javascript
 # end
 #
+activate :sprockets
 activate :deploy do |deploy|
   deploy.deploy_method = :git
   # Optional Settings

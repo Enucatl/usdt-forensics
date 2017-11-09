@@ -84,7 +84,8 @@ def main(verbose, nodes, links):
                 amount = float(t["amount"])
             except KeyError:
                 continue
-            if source != node or amount < min_transaction_size:
+            if (source != node
+                or amount < min_transaction_size):
                 continue
             link_writer.writerow([
                 txid, blocktime, source, target, amount
