@@ -90,7 +90,7 @@ d3.sankey = function() {
         cycleLaneNarrowWidth = 4,
         cycleLaneDistFromFwdPaths = -10,  // the distance above the paths to start showing 'cycle lanes'
         cycleDistFromNode = 30,      // linear path distance before arcing from node
-        cycleControlPointDist = 30,  // controls the significance of the cycle's arc
+        cycleControlPointDist = 10,  // controls the significance of the cycle's arc
         cycleSmallWidthBuffer = 2  // distance between 'cycle lanes'
     ;
 
@@ -201,8 +201,8 @@ d3.sankey = function() {
                      s--/ <-(eq)
                      */
                 // Enclosed shape using curves n' stuff
-                var smallWidth = cycleLaneNarrowWidth,
-
+                var smallWidth = d3.max([1, d.dy]),
+                    cycleControlPointDist = d3.max([1, d.dy])
                     s_x = d.source.x + d.source.dx,
                     s_y = d.source.y + d.sy + d.dy,
                     t_x = d.target.x,
@@ -570,16 +570,16 @@ var known_names = {
     "3NmqEssZvQomHbJFi72Hg3sEwBh6pSM6Zk": "Kraken",
     "1KYiKJEfdJtap9QX2v9BXJMpz2SfU4pgZw": "Bitfinex",
     "3BbDtxBSjgfTRxaBUgR2JACWRukLKtZdiQ": "Treasury",
-}
+};
 
 function printableName(name) {
     if(known_names[name]) {
-        return known_names[name]
+        return known_names[name];
     }
     else{
-        return name.substr(0, 4)
+        return name.substr(0, 4);
     }
-}
+};
 
 function createChart(energy) {
     sankey
@@ -596,10 +596,8 @@ function createChart(energy) {
         .attr("class", function(d) { return (d.causesCycle ? "cycleLink" : "link") })
         .attr("d", path)
         .sort(function(a, b) { return b.dy - a.dy; })
-    ;
-
-    link.filter( function(d) { return !d.causesCycle} )
         .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+    ;
 
     link.append("title")
         .text(function(d) { return d.source.name + " -> " + d.target.name + "\n" + format(d.value); });

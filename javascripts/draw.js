@@ -30,16 +30,16 @@ var known_names = {
     "3NmqEssZvQomHbJFi72Hg3sEwBh6pSM6Zk": "Kraken",
     "1KYiKJEfdJtap9QX2v9BXJMpz2SfU4pgZw": "Bitfinex",
     "3BbDtxBSjgfTRxaBUgR2JACWRukLKtZdiQ": "Treasury",
-}
+};
 
 function printableName(name) {
     if(known_names[name]) {
-        return known_names[name]
+        return known_names[name];
     }
     else{
-        return name.substr(0, 4)
+        return name.substr(0, 4);
     }
-}
+};
 
 function createChart(energy) {
     sankey
@@ -56,10 +56,8 @@ function createChart(energy) {
         .attr("class", function(d) { return (d.causesCycle ? "cycleLink" : "link") })
         .attr("d", path)
         .sort(function(a, b) { return b.dy - a.dy; })
-    ;
-
-    link.filter( function(d) { return !d.causesCycle} )
         .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+    ;
 
     link.append("title")
         .text(function(d) { return d.source.name + " -> " + d.target.name + "\n" + format(d.value); });
