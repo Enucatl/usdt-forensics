@@ -91,7 +91,7 @@ d3.sankey = function() {
         cycleLaneDistFromFwdPaths = -10,  // the distance above the paths to start showing 'cycle lanes'
         cycleDistFromNode = 30,      // linear path distance before arcing from node
         cycleControlPointDist = 10,  // controls the significance of the cycle's arc
-        cycleSmallWidthBuffer = 2  // distance between 'cycle lanes'
+        cycleSmallWidthBuffer = 0  // distance between 'cycle lanes'
     ;
 
     function defaultId(d) {
@@ -210,7 +210,7 @@ d3.sankey = function() {
                     se_x = s_x + cycleDistFromNode,
                     se_y = s_y,
                     ne_x = se_x,
-                    ne_y = cycleLaneDistFromFwdPaths - (d.cycleIndex * (smallWidth + cycleSmallWidthBuffer) ),  // above regular paths, in it's own 'cycle lane', with a buffer around it
+                    ne_y = cycleLaneDistFromFwdPaths,  // above regular paths, in it's own 'cycle lane', with a buffer around it
                     nw_x = t_x - cycleDistFromNode,
                     nw_y = ne_y,
                     sw_x = nw_x,
@@ -538,7 +538,7 @@ d3.sankey = function() {
 
     return sankey;
 };
-var margin = {top: 1, right: 1, bottom: 6, left: 1},
+var margin = {top: 1, right: 1, bottom: 150, left: 1},
     width = 1000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -649,7 +649,7 @@ function createChart(energy) {
     }
 
     var cycleTopMarginSize = (sankey.cycleLaneDistFromFwdPaths() -
-        ( (sankey.cycleLaneNarrowWidth() + sankey.cycleSmallWidthBuffer() ) * numCycles ) )
+        ( (sankey.cycleLaneNarrowWidth() + sankey.cycleSmallWidthBuffer() )) )
     var horizontalMarginSize = ( sankey.cycleDistFromNode() + sankey.cycleControlPointDist() );
 
     svg = d3.select("#chart").select("svg")

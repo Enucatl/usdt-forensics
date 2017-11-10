@@ -1,4 +1,4 @@
-var margin = {top: 1, right: 1, bottom: 6, left: 1},
+var margin = {top: 1, right: 1, bottom: 150, left: 1},
     width = 1000 - margin.left - margin.right,
     height = 600 - margin.top - margin.bottom;
 
@@ -109,7 +109,7 @@ function createChart(energy) {
     }
 
     var cycleTopMarginSize = (sankey.cycleLaneDistFromFwdPaths() -
-        ( (sankey.cycleLaneNarrowWidth() + sankey.cycleSmallWidthBuffer() ) * numCycles ) )
+        ( (sankey.cycleLaneNarrowWidth() + sankey.cycleSmallWidthBuffer() )) )
     var horizontalMarginSize = ( sankey.cycleDistFromNode() + sankey.cycleControlPointDist() );
 
     svg = d3.select("#chart").select("svg")
