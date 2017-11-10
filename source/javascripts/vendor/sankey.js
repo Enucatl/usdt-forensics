@@ -90,7 +90,7 @@ d3.sankey = function() {
         cycleLaneNarrowWidth = 4,
         cycleLaneDistFromFwdPaths = -10,  // the distance above the paths to start showing 'cycle lanes'
         cycleDistFromNode = 30,      // linear path distance before arcing from node
-        cycleControlPointDist = 30,  // controls the significance of the cycle's arc
+        cycleControlPointDist = 10,  // controls the significance of the cycle's arc
         cycleSmallWidthBuffer = 2  // distance between 'cycle lanes'
     ;
 
@@ -201,8 +201,8 @@ d3.sankey = function() {
                      s--/ <-(eq)
                      */
                 // Enclosed shape using curves n' stuff
-                var smallWidth = cycleLaneNarrowWidth,
-
+                var smallWidth = d3.max([1, d.dy]),
+                    cycleControlPointDist = d3.max([1, d.dy])
                     s_x = d.source.x + d.source.dx,
                     s_y = d.source.y + d.sy + d.dy,
                     t_x = d.target.x,
