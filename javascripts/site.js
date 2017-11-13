@@ -539,8 +539,8 @@ d3.sankey = function() {
     return sankey;
 };
 var margin = {top: 1, right: 1, bottom: 150, left: 1},
-    width = 1000 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    width = 1200 - margin.left - margin.right,
+    height = 1000 - margin.top - margin.bottom;
 
 var formatNumber = d3.format(",.0f"),
     format = function(d) { return formatNumber(d / 1000) + " kUSDT"; },
@@ -600,7 +600,10 @@ function createChart(energy) {
     ;
 
     link.append("title")
-        .text(function(d) { return d.source.name + " -> " + d.target.name + "\n" + format(d.value); });
+        .text(function(d) {
+            return d.id + "\n" +
+                printableName(d.source.name) + " -> " + printableName(d.target.name) +
+                "\n" + format(d.value); });
 
     var node = allgraphics.append("g").attr("id", "node-container")
         .selectAll(".node")
@@ -653,16 +656,16 @@ function createChart(energy) {
     var horizontalMarginSize = ( sankey.cycleDistFromNode() + sankey.cycleControlPointDist() );
 
     svg = d3.select("#chart").select("svg")
-        .attr( "viewBox",
+        .attr("viewBox",
             "" + (0 - horizontalMarginSize ) + " "         // left
             + cycleTopMarginSize + " "                     // top
-            + (960 + horizontalMarginSize * 2 ) + " "     // width
-            + (500 + (-1 * cycleTopMarginSize)) + " " );  // height
+            + (width + horizontalMarginSize * 2 ) + " "     // width
+            + (height + (-1 * cycleTopMarginSize)) + " " );  // height
 };
 
 
-d3.csv("data/nodes.csv", function(nodes, error) {
-    d3.csv("data/links.csv", function(links, error) {
+d3.csv("data/nodes-100k.csv", function(nodes, error) {
+    d3.csv("data/simplified-links-100k.csv", function(links, error) {
         nodes = nodes.map(function(d) {
             return {
                 name: d.address,
@@ -671,6 +674,7 @@ d3.csv("data/nodes.csv", function(nodes, error) {
         });
         links = links.map(function(d) {
             return {
+                id: d.id,
                 source: d.source,
                 target: d.target,
                 value: +d.value
